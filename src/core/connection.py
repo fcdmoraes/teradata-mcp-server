@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
+from sqlalchemy.pool import QueuePool
 
 from core.config import settings
 
@@ -46,6 +47,7 @@ def _build_engine() -> Engine:
 
     engine = create_engine(
         url,
+        poolclass=QueuePool,
         pool_size=settings.pool_size,
         max_overflow=settings.max_overflow,
         pool_timeout=settings.pool_timeout,
